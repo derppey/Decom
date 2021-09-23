@@ -3,4 +3,5 @@
   margin: 0;
   height: 100vh;
   background-color: #18191A;
+  display: flex;
 }

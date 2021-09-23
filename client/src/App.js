@@ -1,19 +1,21 @@
-import { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import Gun from 'gun';
 import GunService from './services/gunService';
 import { connect } from 'react-redux';
 import { addMessage } from './redux/actions';
 
-import Dashboard from './components/Dashboard/dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 import gunService from './services/gunService';
+
+const serverContext = React.createContext(null);
 // initialize gun locally
 const gun = Gun({
   peers: [
     'http://localhost:3030/gun'
   ]
 })
-const serverNameArray = [];
 export default function App() {
+  const [serverNameArray, setServers] = useState([])
   const [formState, setForm] = useState({
     name: '',
     message: ''
@@ -22,8 +24,13 @@ export default function App() {
 
   useEffect(() => {
     const getAllServers = async () => {
+      let output = []
       await servers.map().once((data,key) => {
-        if(!(serverNameArray.includes(data.name))){ serverNameArray.push(data.name) };
+        if(!(output.includes(data.name))){
+          const array = [...output,data.name]
+          output = array;
+          setServers(output);
+        };
       })
     }
 
@@ -46,14 +53,17 @@ export default function App() {
   }
 
   return (
-    <div>
-      <Dashboard />
+    <div className="App">
+      <serverContext.Provider value={serverNameArray}>
+        <Dashboard/>
+      </serverContext.Provider>
     </div>
   );
 }
 
 
 
+
 export {
-  serverNameArray
+  serverContext
 }

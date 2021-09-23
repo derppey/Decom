@@ -1,11 +1,12 @@
 import Gun from 'gun'
 import { v4 as uuidv4 } from 'uuid';
-import { serverNameArray  } from '../App';
 const gun = Gun({
   peers: [
     'http://localhost:3030/gun'
   ]
 })
+
+const serverNameArray = ['Test Server 3']
 const TestServer3 = gun.get('servers/Test Server 3')
 const gunService = {
   getAllMessages: async () => {

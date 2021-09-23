@@ -1,10 +1,12 @@
 import React from 'react'; 
-import './dashboard.css';
+import './Dashboard.css';
 import ServerList from '../ServerList/ServerList';
-const Dashboard = () => {
+import MessageContainer from '../MessageContainer/MessageContainer';
+const Dashboard = ({serverNameArray}) => {
   return (
     <div className='Dashboard'>
-      <ServerList />
+      <ServerList serverNameArray={serverNameArray}/>
+      <MessageContainer/>
     </div>
   )
 }
