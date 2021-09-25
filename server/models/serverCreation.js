@@ -1,1 +1,0 @@
-const {Gun} = require('../index');
