@@ -1,43 +1,40 @@
-import { combineReducers } from 'redux';
-const keys = [];
-const messages = ( state = [], action) => {
-  
-  
-  switch (action.type){
+import { combineReducers } from 'redux'
+const keys = []
+const messages = (state = [], action) => {
+  switch (action.type) {
     case 'ADD_MESSAGE':
-      if(!(keys.includes(action['payload'].message.id))){
-        keys.push(action['payload'].message.id)
-        return [...state, action['payload'].message].sort((a, b) => a.createdAt - b.createdAt);
+      if (!(keys.includes(action.payload.message.id))) {
+        keys.push(action.payload.message.id)
+        return [...state, action.payload.message].sort((a, b) => a.createdAt - b.createdAt)
       }
-      return state;
+      return state
     case 'CLEAR_MESSAGE':
-      return [];
+      return []
     default:
-      return state; 
+      return state
   }
-};
+}
 const server = (state = 'Test Server 3', action) => {
-  switch(action.type){
+  switch (action.type) {
     case 'SET_SERVER':
-      return action['payload']?.server;
+      return action.payload?.server
     default:
-      return state;
+      return state
   }
 }
 const serverList = (state = [], action) => {
-  switch(action.type){
+  switch (action.type) {
     case 'ADD_SERVER':
-      return action['payload']?.server;
+      return action.payload?.server
     default:
-      return state;
+      return state
   }
-
 }
 
 const reducers = combineReducers({
   messages,
   server,
   serverList
-});
+})
 
-export default reducers;
+export default reducers

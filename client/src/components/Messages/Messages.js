@@ -1,39 +1,28 @@
-import './Messages.css';
-import React, { useEffect, useState, useContext } from 'react';
-import { connect } from 'react-redux';
+import './Messages.css'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
 import Gun from 'gun'
-import gunService from '../../services/gunService';
-import { addMessage, clearMessages, setServer, addServer} from '../../redux/actions';
-import moment from 'moment';
+import { addMessage, clearMessages, setServer, addServer } from '../../redux/actions'
+import moment from 'moment'
 
 const gun = Gun({
   peers: [
-    'http://192.168.1.70:3030/gun',
+    'http://192.168.1.70:3030/gun'
   ]
 })
 
-
-const MessageContainer = ({server ,addMessage, clearMessages, messages}) => {
+const MessageContainer = ({ server, addMessage, clearMessages, messages }) => {
   const Server = gun.get(`servers/${server}`)
   useEffect(() => {
     const getMessages = async () => {
-      clearMessages();
-      var match = {
-        // lexical queries are kind of like a limited RegEx or Glob.
-        '.': {
-          // property selector
-          'createdAt': new Date(+new Date() - 1 * 1000 * 60 * 60 * 3), // find any indexed property larger ~3 hours ago
-        },
-        '-': 1, // filter in reverse
-      };
-      await Server.get('/messages').map(message => message.createdAt >= new Date(+new Date() - 1 * 1000 * 60 * 60 * 3) ? message : undefined).once(async (data,key) => {
-        addMessage({data, server});
-        let div = document.getElementById('Messages');
-        div.scrollTop = div.scrollHeight;
+      clearMessages()
+      await Server.get('/messages').map(message => message.createdAt >= new Date(+new Date() - 1 * 1000 * 60 * 60 * 3) ? message : undefined).once(async (data, key) => {
+        addMessage({ data, server })
+        const div = document.getElementById('Messages')
+        div.scrollTop = div.scrollHeight
       })
-      
     }
-    getMessages();
+    getMessages()
   }, [server])
   return (
     <div id='Messages'>
@@ -55,24 +44,20 @@ const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
     server: state.server,
-    messages: state.messages,
-    
+    messages: state.messages
 
-  };
-
-};
+  }
+}
 
 const mapDispatchToProps = (dispatch) => ({
   addServer: (payload) => dispatch(addServer(payload)),
   setServer: (payload) => dispatch(setServer(payload)),
   addMessage: (payload) => dispatch(addMessage(payload)),
-  clearMessages: () => dispatch(clearMessages()),
+  clearMessages: () => dispatch(clearMessages())
 
-});
+})
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MessageContainer);
-
-
+)(MessageContainer)

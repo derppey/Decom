@@ -7,23 +7,21 @@ export const addMessage = (messagePayload) => {
       server: messagePayload.currentServer
     }
   }
-};
+}
 
 export const clearMessages = () => {
   return {
-    type: 'CLEAR_MESSAGE',
+    type: 'CLEAR_MESSAGE'
   }
 }
 
 export const addServer = (server) => {
-  
   return {
     type: 'ADD_SERVER',
     payload: {
-      server: server,
+      server: server
     }
   }
-
 }
 
 export const setServer = (server) => {
@@ -33,5 +31,4 @@ export const setServer = (server) => {
       server: server
     }
   }
-
 }
