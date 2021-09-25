@@ -1,5 +1,54 @@
-.Messages {
+#Messages {
   background-color: #3A3B3C;
   width: 100vw;
-  height: 95vh;
+  height: 90vh;
+  overflow-y: scroll;
+  
+}
+
+.Message{
+  color: white;
+  text-align: center;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 20px 20px;
+  margin: 20px 10px;
+  border-style: 1px solid black;
+  
+}
+.Content {
+  width: 60vw;
+  overflow-x: hidden;
+}
+ul{
+  width: 100%;
+  margin: 0;
+}
+.profileImage{
+  width: 40px;
+  display: block;
+  border-radius: 40px;
+  align-self: flex-start;
+  margin-top: 10px;
+}
+h5, p{
+  text-align: left;
+}
+p{
+  color: #8256c1;
+  font-weight: 600;
+  font-size: 1rem;
+}
+h5{
+  font-weight: 200;
+  color: #d5d5d5;
+  font-size: 1.15rem;
+}
+
+span{
+  font-weight: 200;
+  font-size: 0.8rem;
+  margin-left: 5px;
+  color: #858585;
 }

@@ -1,20 +1,57 @@
+.Highlight{
+  display: none;
+}
 .ServerPanel{
   background-color: #1b1c1d;
   color: white;
   width: 25vw;
   max-width: 100px;
-  height: 100vh;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px;
-  padding-top: 20px;
-  
+  padding: 10px 0px;
+  overflow: scroll;
 }
-img{
+.ServerContainer{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 20px 5px;
+  flex-shrink: 3;
+  margin: 20px 0px;
+}
+.Server{
   width: 50px;
+  cursor: pointer;
   border-radius: 25%;
 }
 
+.Server:active{
+  width: 100px;
+}
+
+#addServer{
+  background-image: url('https://avatars.dicebear.com/api/initials/plus.svg');
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+  border-style: none;
+  cursor:pointer;
+}
+
+.Server:hover + .Highlight{
+  display: block;
+}
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .ServerPanel::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.ServerPanel {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 
+
+img, p{
+  display: block;
+}

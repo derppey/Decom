@@ -2,26 +2,22 @@ import React, { useEffect, useState, useReducer } from 'react';
 import Gun from 'gun';
 import GunService from './services/gunService';
 import { connect } from 'react-redux';
-import { addMessage } from './redux/actions';
+import { addServer , setServer} from './redux/actions';
 
 import Dashboard from './components/Dashboard/Dashboard';
-import gunService from './services/gunService';
-
-const serverContext = React.createContext(null);
 // initialize gun locally
 const gun = Gun({
   peers: [
-    'http://localhost:3030/gun'
+    'http://192.168.1.70:3030/gun',
   ]
 })
-export default function App() {
-  const [serverNameArray, setServers] = useState([])
+function App({addServer}) {
   const [formState, setForm] = useState({
     name: '',
     message: ''
   });
   const servers = gun.get(`servers`);
-
+  
   useEffect(() => {
     const getAllServers = async () => {
       let output = []
@@ -29,7 +25,7 @@ export default function App() {
         if(!(output.includes(data.name))){
           const array = [...output,data.name]
           output = array;
-          setServers(output);
+          addServer(output);
         };
       })
     }
@@ -38,32 +34,31 @@ export default function App() {
     
   }, [])
 
-  // set a new message in gun, update the local state to reset the form field
-  function saveMessage() {
-    gunService.saveNewMessage(formState.name, formState.message);
-
-    setForm({
-      name: '', message: ''
-    })
-  }
-
-  // update the form state as the user types
-  function onChange(e) {
-    setForm({ ...formState, [e.target.name]: e.target.value  })
-  }
 
   return (
     <div className="App">
-      <serverContext.Provider value={serverNameArray}>
-        <Dashboard/>
-      </serverContext.Provider>
+      <Dashboard/>
     </div>
   );
 }
 
 
+const mapStateToProps = (state) => {
+  return {
+    serverList: state.serverList,
+    server: state.server
 
+  };
 
-export {
-  serverContext
-}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  addServer: (payload) => dispatch(addServer(payload)),
+  setServer: (payload) => dispatch(setServer(payload)),
+
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

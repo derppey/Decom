@@ -2,27 +2,30 @@ import Gun from 'gun'
 import { v4 as uuidv4 } from 'uuid';
 const gun = Gun({
   peers: [
-    'http://localhost:3030/gun'
+    'http://192.168.1.70:3030/gun',
   ]
 })
 
 const serverNameArray = ['Test Server 3']
-const TestServer3 = gun.get('servers/Test Server 3')
 const gunService = {
-  getAllMessages: async () => {
-    let output = []
-    await TestServer3.get('/messages').map().once((data,key) => {
-      output.push(data);
-    })
-    return output;
+    getMessages: async (server) => {
+      const Server = gun.get(`servers/${server}`)
+      let output = []
+      await Server.get('/messages').map().once((data,key) => {
+        let splitted = key.split('/')
+        data.id = splitted[splitted.length - 1]
+        output.push(data);
+        return output;
+      })
+      
+      
+    
   },
-  saveNewMessage: async (user, message) => {
-    TestServer3.get('/messages').set({
-      name: user,
-      message: message,
-      id: uuidv4(),
-      createdAt: Date.now(),
-    });
+  saveNewMessage: async ( message, server) => {
+    let Server = gun.get(`servers/${server}`);
+    let newMessage = Server.get(`/messages/${message.id}`)
+    newMessage.put(message);
+    Server.get('/messages').set(newMessage);
   },
   createServer: async(name) => {
     const servers = gun.get(`servers`);

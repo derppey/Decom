@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Messages from '../Messages/Messages';
 import MessageBox from '../MessageBox/MessageBox';
-const MessageContainer = () => {
+const MessageContainer = ({currentServer}) => {
   return (
     <div className='MessageContainer'>
       <Messages />
