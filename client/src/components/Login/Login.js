@@ -1,51 +1,68 @@
-import './login.css'
-import { Redirect } from 'react-router-dom'
-import React, { useState } from 'react'
-import { user } from '../../services/userService'
+import './login.css';
+import { Redirect, withRouter } from 'react-router-dom';
+import React, { useState, useEffect} from 'react';
+import { user } from '../../services/userService';
 const Login = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function login () {
     return user.auth(username, password, ({ err }) => {
-      if (err) alert(err)
-      else return (<Redirect to="/app" />)
-    })
+      if (err) alert(err);
+      else setLoggedIn(true);
+    });
   }
   function signUp () {
     user.create(username, password, ({ err }) => {
       if (err) {
-        alert(err)
+        alert(err);
       } else {
-        login()
+        login();
       }
-    })
+    });
   }
+  useEffect(() => {
+    const getAlias = async () => {
+      const alias = await user.get('alias').then();
+      if (alias) setLoggedIn(true);
+    };
+    getAlias();
 
+  },[]);
   function onUpdateUsername (e) {
-    e.preventDefault()
-    setUsername(e.target.value)
+    e.preventDefault();
+    setUsername(e.target.value);
   }
   function onUpdatePasword (e) {
-    e.preventDefault()
-    setPassword(e.target.value)
-    return <Redirect to="/app" />
+    e.preventDefault();
+    setPassword(e.target.value);
+    return <Redirect to="/app" />;
   }
   return (
-    <div className="LoginPage">
-      <h1>Create/Login</h1>
-        <div>
-          <label htmlFor="uname">Username</label>
-          <input type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input type="password" placeholder="Enter Password" name="password" value={password} onChange={onUpdatePasword} required/>
-        </div>
-        <button onClick={login}>Login</button>
-        <button onClick={signUp}>Register</button>
+    <div>
+      {loggedIn
+        ? (
+          <Redirect to="/app" />
+        )
+        : (
+          <div className="LoginPage">
+            <h1>Create/Login</h1>
+            <div>
+              <label htmlFor="uname">Username</label>
+              <input type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>
+            </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input type="password" placeholder="Enter Password" name="password" value={password} onChange={onUpdatePasword} required/>
+            </div>
+            <button onClick={login}>Login</button>
+            <button onClick={signUp}>Register</button>
+          </div>
+        )}
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default withRouter(Login);

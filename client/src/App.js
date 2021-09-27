@@ -1,37 +1,35 @@
-import React, { useEffect } from 'react'
-import Gun from 'gun'
-import { connect } from 'react-redux'
-import { addServer, setServer } from './redux/actions'
+import React, { useEffect } from 'react';
+
+import { connect } from 'react-redux';
+import { addServer, setServer } from './redux/actions';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
-} from 'react-router-dom'
-import Dashboard from './components/Dashboard/Dashboard'
-import Login from './components/Login/Login'
+  Route,
+  Redirect
+} from 'react-router-dom';
+import Dashboard from './components/Dashboard/Dashboard';
+import Login from './components/Login/Login';
+import { db } from './services/userService';
 // initialize gun locally
-const gun = Gun({
-  peers: [
-    'http://192.168.1.70:3030/gun'
-  ]
-})
+
 function App ({ addServer }) {
-  const servers = gun.get('servers')
+  const servers = db.get('servers');
 
   useEffect(() => {
     const getAllServers = async () => {
-      let output = []
-      await servers.map().once((data, key) => {
+      let output = [];
+      await servers.map().once((data) => {
         if (!(output.includes(data.name))) {
-          const array = [...output, data.name]
-          output = array
-          addServer(output)
-        };
-      })
-    }
+          const array = [...output, data.name];
+          output = array;
+          addServer(output);
+        }
+      });
+    };
 
-    getAllServers()
-  }, [])
+    getAllServers();
+  }, []);
 
   return (
     <Router>
@@ -41,12 +39,15 @@ function App ({ addServer }) {
             <Dashboard/>
           </div>
         </Route>
-        <Route path="/">
+        <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/">
+          <Redirect to="/app" />
         </Route>
       </Switch>
     </Router>
-  )
+  );
 }
 
 const mapStateToProps = (state) => {
@@ -54,16 +55,16 @@ const mapStateToProps = (state) => {
     serverList: state.serverList,
     server: state.server
 
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addServer: (payload) => dispatch(addServer(payload)),
   setServer: (payload) => dispatch(setServer(payload))
 
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App)
+)(App);

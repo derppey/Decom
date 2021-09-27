@@ -1,19 +1,19 @@
 export const addMessage = (messagePayload) => {
-  console.log(messagePayload)
+  console.log(messagePayload);
   return {
     type: 'ADD_MESSAGE',
     payload: {
       message: messagePayload.data,
       server: messagePayload.currentServer
     }
-  }
-}
+  };
+};
 
 export const clearMessages = () => {
   return {
     type: 'CLEAR_MESSAGE'
-  }
-}
+  };
+};
 
 export const addServer = (server) => {
   return {
@@ -21,8 +21,8 @@ export const addServer = (server) => {
     payload: {
       server: server
     }
-  }
-}
+  };
+};
 
 export const setServer = (server) => {
   return {
@@ -30,5 +30,5 @@ export const setServer = (server) => {
     payload: {
       server: server
     }
-  }
-}
+  };
+};

@@ -25,9 +25,7 @@
   border-radius: 25%;
 }
 
-.Server:active{
-  width: 100px;
-}
+
 
 #addServer{
   background-image: url('https://avatars.dicebear.com/api/initials/plus.svg');

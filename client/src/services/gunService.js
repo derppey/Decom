@@ -1,45 +1,45 @@
-import Gun from 'gun'
-import { v4 as uuidv4 } from 'uuid'
-const gun = Gun({
-  peers: [
-    'http://192.168.1.70:3030/gun'
-  ]
-})
 
-const serverNameArray = ['Test Server 3']
+import { v4 as uuidv4 } from 'uuid';
+import { db } from './userService';
+
+
+const serverNameArray = ['Test Server 3'];
 const gunService = {
   getMessages: async (server) => {
-    const Server = gun.get(`servers/${server}`)
-    const output = []
+    const Server = db.get(`servers/${server}`);
+    const output = [];
     await Server.get('/messages').map().once((data, key) => {
-      const splitted = key.split('/')
-      data.id = splitted[splitted.length - 1]
-      output.push(data)
-      return output
-    })
+      const splitted = key.split('/');
+      data.id = splitted[splitted.length - 1];
+      console.log(data);
+      output.push(data);
+      return output;
+    });
   },
   saveNewMessage: async (message, server) => {
-    const Server = gun.get(`servers/${server}`)
-    const newMessage = Server.get(`/messages/${message.id}`)
-    newMessage.put(message)
-    Server.get('/messages').set(newMessage)
+    const Server = db.get(`servers/${server}`);
+    const newMessage = Server.get(`/messages/${message.id}`);
+    newMessage.put(message);
+    Server.get('/messages').set(newMessage);
+    console.log('Hi i made it');
   },
   createServer: async (name) => {
-    const servers = gun.get('servers')
+    const servers = db.get('servers');
     if (!(serverNameArray.includes(name))) {
-      servers.set({
+      const server = {
         name,
-        uuid: uuidv4()
-      })
-      servers.get(`/${name}`).put({
-        name,
-        uuid: uuidv4()
-      })
-      console.log('🎉 Created server named: ', name)
+        uuid: uuidv4(),
+      };
+      servers.set(server);
+      servers.get(`${server.id}`).put(server);
+
+      
+
+      console.log('🎉 Created server named: ', name);
     } else {
-      console.log('Name already exits')
+      console.log('Name already exits');
     }
   }
-}
+};
 
-export default gunService
+export default gunService;

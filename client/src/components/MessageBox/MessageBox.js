@@ -1,31 +1,35 @@
-import React, { useState } from 'react'
-import gunService from '../../services/gunService'
-import { v4 as uuidv4 } from 'uuid'
-import './MessageBox.css'
-import { addMessage, clearMessages, setServer, addServer } from '../../redux/actions'
-import { connect } from 'react-redux'
+import React, { useState } from 'react';
+import gunService from '../../services/gunService';
+import { v4 as uuidv4 } from 'uuid';
+import './MessageBox.css';
+import { addMessage, clearMessages, setServer, addServer } from '../../redux/actions';
+import { connect } from 'react-redux';
+//import { user } from '../../services/userService';
 
-const MessageBox = ({ server, messages, addMessage }) => {
-  const [formState, setForm] = useState({ message: '' })
+const MessageBox = ({ server, addMessage, alias }) => {
+  const [formState, setForm] = useState({ message: '' });
 
   function onChange (e) {
-    setForm({ ...formState, [e.target.name]: e.target.value })
+    setForm({ ...formState, [e.target.name]: e.target.value });
   }
   function handleKeyDown (e) {
     if (e.key === 'Enter') {
-      saveMessage()
+      console.log('Hi');
+      saveMessage();
     }
   }
-  function saveMessage () {
+  async function saveMessage () {
     const message = {
-      name: 'Sample User',
+      name: alias,
       message: formState.message,
       id: uuidv4(),
       createdAt: Date.now()
-    }
-    addMessage({ data: message, server })
-    gunService.saveNewMessage(message, server)
-    setForm({ message: '' })
+    };
+    
+    addMessage({ data: message, server });
+    gunService.saveNewMessage(message, server);
+    setForm({ message: '' });
+
   }
   return (
     <div className="MessageBox">
@@ -40,8 +44,8 @@ const MessageBox = ({ server, messages, addMessage }) => {
       />
 
     </div>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -49,8 +53,8 @@ const mapStateToProps = (state) => {
     server: state.server,
     messages: state.messages
 
-  }
-}
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   addServer: (payload) => dispatch(addServer(payload)),
@@ -58,9 +62,9 @@ const mapDispatchToProps = (dispatch) => ({
   addMessage: (payload) => dispatch(addMessage(payload)),
   clearMessages: () => dispatch(clearMessages())
 
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MessageBox)
+)(MessageBox);

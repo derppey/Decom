@@ -1,13 +1,13 @@
-import React from 'react'
-import Messages from '../Messages/Messages'
-import MessageBox from '../MessageBox/MessageBox'
-const MessageContainer = () => {
+import React from 'react';
+import Messages from '../Messages/Messages';
+import MessageBox from '../MessageBox/MessageBox';
+const MessageContainer = ({alias}) => {
   return (
     <div className='MessageContainer'>
       <Messages />
-      <MessageBox />
+      <MessageBox alias={alias}/>
     </div>
-  )
-}
+  );
+};
 
-export default MessageContainer
+export default MessageContainer;
