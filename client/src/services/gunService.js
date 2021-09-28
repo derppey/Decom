@@ -16,12 +16,12 @@ const gunService = {
       return output;
     });
   },
-  saveNewMessage: async (message, server) => {
+  saveNewMessage: async (message, server, channel) => {
+    console.log(channel);
     const Server = db.get(`servers/${server}`);
-    const newMessage = Server.get(`messages/${message.id}`);
+    const newMessage = Server.get(`messages/${channel}/${message.id}`);
     newMessage.put(message);
-    Server.get('messages').set(newMessage);
-    console.log('Hi i made it');
+    Server.get(channel).get('messages').set(newMessage);
   },
   createServer: async (alias, name, image) => {
     const servers = db.get('servers');
@@ -35,6 +35,8 @@ const gunService = {
       db.get(alias).get('serverList').set(server);
       servers.get(`${server.uuid}`).put(server);
       servers.get(`${server.uuid}`).get('members').set(user);
+      const Server = db.get(`${server.uuid}`);
+      Server.get('channels').set('general');
       console.log('🎉 Created server named: ', name);
       console.log(server);
     } else {
@@ -44,8 +46,11 @@ const gunService = {
   getServer: async (uuid) => {
     const Server = await db.get(`servers/${uuid}`);
     return Server;
-    
-  }
+  },
+  createChannel: async (uuid, name) => {
+    const Server = db.get(`servers/${uuid}`);
+    Server.get('channels').set(name);
+  },
 
 };
 

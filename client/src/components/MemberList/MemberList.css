@@ -1,11 +1,13 @@
 .MemberList{
   width: 15%;
+  min-width: 200px;
   margin: 0;
   overflow:hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #242526;
+  gap: 5px 20px;
 }
 h1{
   color: #9d9d9d;

@@ -1,25 +1,48 @@
 .Config{
   width: 10%;
+  min-width: 150px;
+  
   background-color: #242526;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   align-items: flex-start;
-  gap: 40px 40px;
+  gap: 20px 20px;
   padding: 20px 20px;
-  
+  height: 100vh;
+  overflow-y: scroll;
 }
 
 .inviteButton {
   padding: 10px 20px;
-  background-color: #c3b2dc;
+  background-color: #8256c1;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 10%;
 }
 h1{
-  font-weight: 500;
+  font-weight: 100;
 }
-h3{
-  color: #c3b2dc; 
+#title {
+  color: #f0eff0; 
+  font-weight: 100;
+  font-size: 30px;
+  min-height: 60px;
+}
+
+p{
+  cursor: pointer;
+}
+input{
+  width: 100px;
+  border: none;
+  padding: 3px 10px;
+  border-radius: 15px;
+  color: #8256c1;
+  background-color: #444546;
+}
+
+.flexItem{
+  min-height: 35px;
 }

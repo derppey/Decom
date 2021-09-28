@@ -1,16 +1,23 @@
 import { combineReducers } from 'redux';
 let keys = [];
-const messages = (state = [], action) => {
+const messages = (state = {}, action) => {
   switch (action.type) {
   case 'ADD_MESSAGE':
     if (!(keys.includes(action.payload.message.id))) {
       keys.push(action.payload.message.id);
-      return [...state, action.payload.message].sort((a, b) => a.createdAt - b.createdAt);
+      const newState = {...state};
+      const channel = action.payload.channel;
+      if (newState[channel]) {
+        newState[channel] = [...newState[channel], action.payload.message].sort((a,b) =>  a.createdAt - b.createdAt);
+      } else {
+        newState[channel] = [action.payload.message];
+      }
+      return newState;
     }
     return state;
   case 'CLEAR_MESSAGE':
     keys = [];
-    return [];
+    return {};
   default:
     return state;
   }
@@ -33,7 +40,6 @@ const serverList = (state = [], action) => {
 };
 
 const alias = (state = '', action) => {
-  console.log(action);
   switch (action.type) {
   case 'SET_ALIAS':
     return action.payload?.alias;
@@ -43,11 +49,20 @@ const alias = (state = '', action) => {
   
 };
 
+const channel = (state = 'general', action) => {
+  switch (action.type) {
+  case 'SET_CHANNEL':
+    return action.payload?.channel;
+  default:
+    return state;
+  }
+};
 const reducers = combineReducers({
   messages,
   server,
   serverList,
-  alias
+  alias,
+  channel
 });
 
 export default reducers;

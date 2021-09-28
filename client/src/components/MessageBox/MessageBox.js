@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import gunService from '../../services/gunService';
 import { v4 as uuidv4 } from 'uuid';
 import './MessageBox.css';
-import { addMessage, clearMessages, setServer, addServer } from '../../redux/actions';
+import { addMessage } from '../../redux/actions';
 import { connect } from 'react-redux';
 
-const MessageBox = ({ server, addMessage, alias }) => {
+const MessageBox = ({ channel,server, addMessage, alias }) => {
   const [formState, setForm] = useState({ message: '' });
 
   function onChange (e) {
@@ -24,8 +24,8 @@ const MessageBox = ({ server, addMessage, alias }) => {
       createdAt: Date.now()
     };
     
-    addMessage({ data: message, server });
-    gunService.saveNewMessage(message, server);
+    addMessage({ data: message, server, channel});
+    gunService.saveNewMessage(message, server, channel);
     setForm({ message: '' });
 
   }
@@ -54,15 +54,13 @@ const mapStateToProps = (state) => {
     server: state.server,
     messages: state.messages,
     alias: state.alias,
+    channel: state.channel
 
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addServer: (payload) => dispatch(addServer(payload)),
-  setServer: (payload) => dispatch(setServer(payload)),
   addMessage: (payload) => dispatch(addMessage(payload)),
-  clearMessages: () => dispatch(clearMessages())
 
 });
 

@@ -8,13 +8,13 @@ const JoinServer = () => {
   const [localAlias, setAlias] = useState('');
   useEffect(() => {
     const getAndSet = async () => {
+      const servers = db.get('servers');
       const alias = await user.get('alias');
       setAlias(alias);
       console.log('here');
       const server = await gunService.getServer(uuid);
       db.get(alias).get('serverList').set(server);
-      console.log(user);
-      db.get('servers').get(`${uuid}`).get('members').set(user);
+      servers.get(`${uuid}`).get('members').set(user);
     };
     getAndSet();
   }, []);

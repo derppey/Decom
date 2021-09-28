@@ -1,10 +1,10 @@
 export const addMessage = (messagePayload) => {
-  console.log(messagePayload);
   return {
     type: 'ADD_MESSAGE',
     payload: {
       message: messagePayload.data,
-      server: messagePayload.currentServer
+      server: messagePayload.currentServer,
+      channel: messagePayload.channel,
     }
   };
 };
@@ -42,3 +42,11 @@ export const setAlias = (alias) => {
   };
 };
 
+export const setChannel = (channel) => {
+  return {
+    type: 'SET_CHANNEL',
+    payload: {
+      channel: channel
+    }
+  };
+};

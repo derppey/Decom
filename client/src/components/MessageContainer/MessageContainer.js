@@ -1,10 +1,11 @@
 import React from 'react';
 import Messages from '../Messages/Messages';
-import MessageBox from '../MessageBox/MessageBox';
+
 import MemberList from '../MemberList/MemberList';
 import './MessageContainer.css';
 import Config from '../Config/Config.js';
 import { connect } from 'react-redux';
+
 
 const MessageContainer = ({server}) => {
   return (
@@ -18,8 +19,9 @@ const MessageContainer = ({server}) => {
           </div>
           )
       }
-        
-      <MessageBox/>
+      
+      
+      
     </div>
   );
 };

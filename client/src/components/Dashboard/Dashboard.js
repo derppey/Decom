@@ -43,7 +43,7 @@ const Dashboard = ({alias, setAlias}) => {
           </div>
           <div className='Dashboard'>
             <ServerList/>
-            <MessageContainer alias={alias}/>
+            <MessageContainer/>
             
           </div>
         </div>
