@@ -5,7 +5,10 @@
   overflow-y: scroll;
   
 }
+.MessageDiv{
+  width: 75%;
 
+}
 .Message{
   color: white;
   text-align: center;
@@ -52,3 +55,14 @@ span{
   margin-left: 5px;
   color: #858585;
 }
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+#Messages::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#Messages {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+} 

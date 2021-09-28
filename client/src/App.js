@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, {useEffect } from 'react';
 
 import { connect } from 'react-redux';
-import { addServer, setServer } from './redux/actions';
+import { addServer, setServer, setAlias } from './redux/actions';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,26 +10,22 @@ import {
 } from 'react-router-dom';
 import Dashboard from './components/Dashboard/Dashboard';
 import Login from './components/Login/Login';
-import { db } from './services/userService';
+import MakeServer from './components/MakeServer/MakeServer';
+import JoinServer from './components/JoinServer/JoinServer';
+import { user } from './services/userService';
+
 // initialize gun locally
 
-function App ({ addServer }) {
-  const servers = db.get('servers');
-
+function App ({ setAlias }) {
   useEffect(() => {
-    const getAllServers = async () => {
-      let output = [];
-      await servers.map().once((data) => {
-        if (!(output.includes(data.name))) {
-          const array = [...output, data.name];
-          output = array;
-          addServer(output);
-        }
-      });
+    const aliasGaming = async () => {
+      const alias2 = await user.get('alias');
+      setAlias(alias2);
+      console.log(alias2);
     };
-
-    getAllServers();
+    aliasGaming();
   }, []);
+
 
   return (
     <Router>
@@ -42,6 +38,12 @@ function App ({ addServer }) {
         <Route path="/login">
           <Login />
         </Route>
+        <Route path="/createServer">
+          <MakeServer />
+        </Route>
+        <Route path="/join/:uuid">
+          <JoinServer />
+        </Route>
         <Route path="/">
           <Redirect to="/app" />
         </Route>
@@ -53,14 +55,16 @@ function App ({ addServer }) {
 const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
-    server: state.server
+    server: state.server,
+    alias: state.alias,
 
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   addServer: (payload) => dispatch(addServer(payload)),
-  setServer: (payload) => dispatch(setServer(payload))
+  setServer: (payload) => dispatch(setServer(payload)),
+  setAlias: (payload) => dispatch(setAlias(payload))
 
 });
 

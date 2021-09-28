@@ -1,26 +1,26 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import './Dashboard.css';
 //import { Redirect } from 'react-router-dom'; <Redirect to='/login' />
 import ServerList from '../ServerList/ServerList';
 import MessageContainer from '../MessageContainer/MessageContainer';
+import { connect } from 'react-redux';
 import { user } from '../../services/userService';
-import { giphyService } from '../../services/giphyService';
+import { setAlias } from '../../redux/actions';
 
 
-const Dashboard = () => {
-  const [alias, setAlias] = useState('');
-  const [gif, setGif] = useState('https://media0.giphy.com/media/l4FGsAAOFdtylBeSc/giphy.mp4?cid=92f33f6ae961b1c1e825e3caaf4a3afd5ce0fa719d22da3b&rid=giphy.mp4&ct=g');
+//import { giphyService } from '../../services/giphyService';
+
+const Dashboard = ({alias, setAlias}) => {
+  console.log(alias);
+  //const [gif, setGif] = useState('');
   useEffect(() => {
-    const getGif = async () => {
-      setGif(await giphyService.getRandomGif());
+    const aliasGaming = async () => {
+      const alias2 = await user.get('alias');
+      setAlias(alias2);
+      console.log(alias2);
     };
-    getGif();
-    const getAlias = async () => {
-      const alias = await user.get('alias');
-      console.log(alias);
-      setAlias(alias);
-    };
-    getAlias();
+    aliasGaming();
+    
     setTimeout(() => {
       const elm = document.getElementsByClassName('loading')[0];
       try {
@@ -28,7 +28,7 @@ const Dashboard = () => {
       } catch (err) {
         console.log(err);
       }
-    }, 5000);
+    }, 1000);
 
   },[]);
   return (
@@ -38,19 +38,41 @@ const Dashboard = () => {
           <div className="loading">
             <h1>Please wait while I load your messages</h1>
             <video autoPlay muted>
-              <source src={gif} type="video/mp4" />
+              <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
             </video>
           </div>
           <div className='Dashboard'>
             <ServerList/>
             <MessageContainer alias={alias}/>
+            
           </div>
         </div>
-      ) : (<b></b>
+      ) : (<div className="loading">
+        <h1>Please wait while I load your messages</h1>
+        <video autoPlay muted>
+          <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
+        </video>
+      </div>
         
       )}
     </div>
   );
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+  return {
+    alias: state.alias,
+
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setAlias: (payload) => dispatch(setAlias(payload))
+
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);
+

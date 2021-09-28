@@ -9,12 +9,10 @@ import { db } from '../../services/userService';
 
 const MessageContainer = ({ server,addMessage, clearMessages, messages}) => {
   const Server = db.get(`servers/${server}`);
-  console.log(server);
   useEffect(() => {
     const getMessages = async () => {
       clearMessages();
-      console.log('hi new');
-      await Server.get('/messages').map().once(async (data) => {
+      await Server.get('messages').map().once(async (data) => {
         if (data.createdAt >= new Date(+new Date() - 1 * 1000 * 60 * 60 * 3)) {
           addMessage({ data, server });
           const div = document.getElementById('Messages');
@@ -25,17 +23,23 @@ const MessageContainer = ({ server,addMessage, clearMessages, messages}) => {
     getMessages();
   }, [server]);
   return (
-    <div id='Messages'>
+    <div className="MessageDiv">
       {
-        messages.map((message) => (
-          <div className="Message" key={message.id}>
-            <img className="profileImage" src={`https://avatars.dicebear.com/api/initials/${message.name}.svg`} />
-            <div className="Content">
-              <p>{message.name} <span>{moment(message.createdAt).fromNow()}</span></p>
-              <h5>{message.message}</h5>
-            </div>
+        server === '' ? (<div id='Messages'></div>) : (
+          <div id='Messages'>
+            {
+              messages.map((message) => (
+                <div className="Message" key={message.id}>
+                  <img className="profileImage" src={`https://avatars.dicebear.com/api/initials/${message.name}.svg`} />
+                  <div className="Content">
+                    <p>{message.name} <span>{moment(message.createdAt).fromNow()}</span></p>
+                    <h5>{message.message}</h5>
+                  </div>
+                </div>
+              ))
+            }
           </div>
-        ))
+        )
       }
     </div>
   );
@@ -44,7 +48,7 @@ const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
     server: state.server,
-    messages: state.messages
+    messages: state.messages,
 
   };
 };

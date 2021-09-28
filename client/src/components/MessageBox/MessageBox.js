@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import './MessageBox.css';
 import { addMessage, clearMessages, setServer, addServer } from '../../redux/actions';
 import { connect } from 'react-redux';
-//import { user } from '../../services/userService';
 
 const MessageBox = ({ server, addMessage, alias }) => {
   const [formState, setForm] = useState({ message: '' });
@@ -14,7 +13,6 @@ const MessageBox = ({ server, addMessage, alias }) => {
   }
   function handleKeyDown (e) {
     if (e.key === 'Enter') {
-      console.log('Hi');
       saveMessage();
     }
   }
@@ -33,15 +31,18 @@ const MessageBox = ({ server, addMessage, alias }) => {
   }
   return (
     <div className="MessageBox">
-      <input
-        onChange={onChange}
-        onKeyDown={handleKeyDown}
-        placeholder="Type message"
-        className="MessageInput"
-        type='text'
-        name="message"
-        value={formState.message}
-      />
+      {server === '' ? (<b></b>):
+        (<input
+          onChange={onChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Type message"
+          className="MessageInput"
+          type='text'
+          name="message"
+          value={formState.message}
+        />)
+      }
+      
 
     </div>
   );
@@ -51,7 +52,8 @@ const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
     server: state.server,
-    messages: state.messages
+    messages: state.messages,
+    alias: state.alias,
 
   };
 };

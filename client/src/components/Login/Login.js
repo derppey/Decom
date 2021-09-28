@@ -38,7 +38,6 @@ const Login = () => {
   function onUpdatePasword (e) {
     e.preventDefault();
     setPassword(e.target.value);
-    return <Redirect to="/app" />;
   }
   return (
     <div>

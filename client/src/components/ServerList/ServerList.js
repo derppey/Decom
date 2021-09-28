@@ -1,15 +1,43 @@
-import React from 'react';
-import gunService from '../../services/gunService';
+import React, { useEffect, useState } from 'react';
+//import gunService from '../../services/gunService';
 import { connect } from 'react-redux';
 import { addServer, setServer } from '../../redux/actions';
 import './ServerList.css';
+import { useHistory } from 'react-router-dom';
+import { db } from '../../services/userService';
 
-const ServerList = ({ setServer, serverList }) => {
+const ServerList = ({ setServer,alias}) => {
+  const history = useHistory();
+  const [serverList, addServer] = useState([]);
+  const servers = db.get(alias).get('serverList');
+ 
+
+  useEffect(() => {
+    const getAllServers = async () => {
+      console.log(alias);
+      let output = [];
+      let keys = [];
+      await servers.map().once((data) => {
+        if (!(keys.includes(data.uuid))) {
+          const array = [...output, data];
+          output = array;
+          console.log(data);
+          keys.push(data.uuid);
+          addServer(output);
+        }
+      });
+      
+    };
+
+    getAllServers();
+  }, []);
   async function createServer () {
-    const res = await fetch('https://random-word-api.herokuapp.com/word?number=1');
-    const data = await res.json();
-    gunService.createServer(data[0]);
-    console.log(serverList);
+    // const res = await fetch('https://random-word-api.herokuapp.com/word?number=1');
+    // const data = await res.json();
+    // gunService.createServer(data[0]);
+    // console.log(serverList);
+
+    history.push('/createServer');
   }
   async function updateDaServer (e) {
     const server = e.target.attributes.getNamedItem('alt').nodeValue;
@@ -20,8 +48,8 @@ const ServerList = ({ setServer, serverList }) => {
     <div className="ServerPanel">
       {
         serverList.map((server) => (
-          <div className="ServerContainer" key={server}>
-            <img className="Server" onClick={updateDaServer} src={`https://avatars.dicebear.com/api/initials/${server}.svg`} alt={server}/>
+          <div className="ServerContainer" key={server.uuid}>
+            <img className="Server" onClick={updateDaServer} src={server.icon} alt={server.uuid}/>
             <p className="Highlight">➤</p>
           </div>
         ))
@@ -36,7 +64,8 @@ const ServerList = ({ setServer, serverList }) => {
 const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
-    server: state.server
+    server: state.server,
+    alias: state.alias,
 
   };
 };

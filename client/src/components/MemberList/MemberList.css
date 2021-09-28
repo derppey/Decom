@@ -1,0 +1,12 @@
+.MemberList{
+  width: 15%;
+  margin: 0;
+  overflow:hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #242526;
+}
+h1{
+  color: #9d9d9d;
+}

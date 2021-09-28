@@ -15,7 +15,7 @@ const messages = (state = [], action) => {
     return state;
   }
 };
-const server = (state = 'Test Server 3', action) => {
+const server = (state = '', action) => {
   switch (action.type) {
   case 'SET_SERVER':
     return action.payload?.server;
@@ -32,10 +32,22 @@ const serverList = (state = [], action) => {
   }
 };
 
+const alias = (state = '', action) => {
+  console.log(action);
+  switch (action.type) {
+  case 'SET_ALIAS':
+    return action.payload?.alias;
+  default:
+    return state;
+  }
+  
+};
+
 const reducers = combineReducers({
   messages,
   server,
-  serverList
+  serverList,
+  alias
 });
 
 export default reducers;

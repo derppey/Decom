@@ -3,13 +3,11 @@ import 'gun/sea';
 import 'gun/axe';
 export const db = Gun({
   peers: [
-    'https://decom-db.herokuapp.com/gun'
+    'https://decom-db.herokuapp.com/gun',
   ]
-}).get('root');
-
+}).get('bDsahdasasd');
 
 export const user = db.user().recall({ sessionStorage: true });
-
 db.on('auth', async () => {
   const alias = await user.get('alias');
   console.log(`Logged in as ${alias}`);

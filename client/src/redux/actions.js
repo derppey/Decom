@@ -32,3 +32,13 @@ export const setServer = (server) => {
     }
   };
 };
+
+export const setAlias = (alias) => {
+  return {
+    type: 'SET_ALIAS',
+    payload: {
+      alias: alias
+    }
+  };
+};
+
