@@ -5,8 +5,24 @@
   background-color: #18191A;
   display: flex;
 }
-.loading{
+
+
+.notLoggedIn, .loading{
   width: 100%;
   height: 100vh;
   background-color: #18191A;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+
+
+}
+
+.status{
+  margin: 50px 50px;
+}
+
+a{
+  color: #8256c1;
 }

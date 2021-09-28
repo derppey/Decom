@@ -11,6 +11,9 @@ const MakeServer = ({alias}) => {
   const [imageSelect, setImageSelect] = useState('');
   const history = useHistory();
   const updateImage = (e) => {
+    if (e.target.files[0]) {
+      document.getElementById('blah').src = URL.createObjectURL(e.target.files[0]);
+    }
     setImageSelect(e.target.files[0]);
   };
   const uploadImage = async () => {
@@ -31,16 +34,17 @@ const MakeServer = ({alias}) => {
 
   return (
     <div className="ServerCreation">
+      <img className="serverImage" id="blah" src="#" alt="Your icon" />
       <h1>Create your server!</h1>
       <div>
         <label htmlFor="sname">Server Name: </label>
-        <input type="text" placeholder="Server Name" name="sname" value={server} onChange={(e) => setServer(e.target.value)} required/>
+        <input className="loginInput" type="text" placeholder="Server Name" name="sname" value={server} onChange={(e) => setServer(e.target.value)} required/>
       </div>
       <div>
         <label htmlFor="uname">Server Icon: </label>
-        <input type="file" onChange={updateImage} required/>
+        <input accept="image/*" type='file' id="imgInp" onChange={updateImage}/>
       </div>
-      <button onClick={submit}>Submit</button>
+      <button className="buttons" onClick={submit}>Submit</button>
       
     </div>
   );

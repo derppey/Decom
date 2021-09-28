@@ -44,8 +44,8 @@ const gunService = {
     }
   },
   getServer: async (uuid) => {
-    const Server = await db.get(`servers/${uuid}`);
-    return Server;
+    const servers = db.get('servers');
+    return servers.get(`${uuid}`).then();
   },
   createChannel: async (uuid, name) => {
     const Server = db.get(`servers/${uuid}`);

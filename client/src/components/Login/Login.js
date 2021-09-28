@@ -47,7 +47,7 @@ const Login = () => {
         )
         : (
           <div className="LoginPage">
-            <h1>Create/Login</h1>
+            <h1>Register or Login</h1>
             <div>
               <label htmlFor="uname">Username</label>
               <input className="loginInput" type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>
@@ -56,8 +56,11 @@ const Login = () => {
               <label htmlFor="password">Password</label>
               <input className="loginInput" type="password" placeholder="Enter Password" name="password" value={password} onChange={onUpdatePasword} required/>
             </div>
-            <button className="buttons" onClick={login}>Login</button>
-            <button className="buttons" onClick={signUp}>Register</button>
+            <div>
+              <button className="buttons" onClick={login}>Login</button>
+              <button className="buttons" onClick={signUp}>Register</button>
+            </div>
+            
           </div>
         )}
     </div>

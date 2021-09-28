@@ -20,18 +20,21 @@
   margin: 20px 0px;
 }
 .Server{
-  width: 50px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   cursor: pointer;
-  border-radius: 25%;
 }
 
 
 
 #addServer{
-  background-image: url('https://avatars.dicebear.com/api/initials/plus.svg');
-  width: 50px;
-  height: 50px;
-  border-radius: 25%;
+  font-size: 35px;
+  background-color: #3A3B3C;
+  color: #8256c1;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   border-style: none;
   cursor:pointer;
 }

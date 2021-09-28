@@ -23,7 +23,7 @@ const MemberList = ({ server }) => {
       <h1 className="MembersHeader">Members</h1>
       {
         members.map((person) => (
-          <div key={person.alias}><p>{person.alias}</p></div>
+          <div key={person.alias}><p className="member">{person.alias}</p></div>
         ))
       }
     </div>

@@ -21,7 +21,6 @@ const ServerList = ({ setServer,alias}) => {
         if (!(keys.includes(data.uuid))) {
           const array = [...output, data];
           output = array;
-          console.log(data);
           keys.push(data.uuid);
           addServer(output);
         }
@@ -55,7 +54,7 @@ const ServerList = ({ setServer,alias}) => {
         ))
       }
       <div>
-        <button onClick={createServer} id="addServer"></button>
+        <button onClick={createServer} id="addServer">+</button>
       </div>
     </div>
   );

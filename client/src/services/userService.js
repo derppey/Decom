@@ -12,7 +12,7 @@ export const db = Gun({
   peers: [
     'https://decom-db.herokuapp.com/gun',
   ]
-}).get('bDsahdasasd');
+}).get('xcbvbvcbvc');
 
 export const user = db.user().recall({ sessionStorage: true });
 db.on('auth', async () => {

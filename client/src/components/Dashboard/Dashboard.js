@@ -6,6 +6,7 @@ import MessageContainer from '../MessageContainer/MessageContainer';
 import { connect } from 'react-redux';
 import { user } from '../../services/userService';
 import { setAlias } from '../../redux/actions';
+import { Link } from 'react-router-dom';
 
 
 //import { giphyService } from '../../services/giphyService';
@@ -28,7 +29,7 @@ const Dashboard = ({alias, setAlias}) => {
       } catch (err) {
         console.log(err);
       }
-    }, 2000);
+    }, 500);
 
   },[]);
   return (
@@ -36,7 +37,7 @@ const Dashboard = ({alias, setAlias}) => {
       {alias !== '' ? (
         <div>
           <div className="loading">
-            <h1>Please wait while I load your messages</h1>
+            <h1 className="status">Please wait while I load your messages</h1>
             <video autoPlay muted>
               <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
             </video>
@@ -47,12 +48,18 @@ const Dashboard = ({alias, setAlias}) => {
             
           </div>
         </div>
-      ) : (<div className="loading">
-        <h1>Please wait while I load your messages</h1>
-        <video autoPlay muted>
-          <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
-        </video>
-      </div>
+      ) : (
+        <div>
+          <div className="loading">
+            <h1 className="status">Please wait while I load your messages</h1>
+            <video autoPlay muted>
+              <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
+            </video>
+          </div>
+          <div className="notLoggedIn">
+            <h1 className="status">Sorry it appears you are not logged in, click <Link to="/login">Here</Link> to login!</h1>
+          </div>
+        </div>
         
       )}
     </div>

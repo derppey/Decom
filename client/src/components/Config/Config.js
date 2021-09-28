@@ -10,7 +10,7 @@ const Config = ({server, setChannel}) => {
 
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState(['general']);
-
+  const [serverName, setServerName] = useState('');
   useEffect(() => {
     const getChannels = async () => {
       const Server = db.get(`servers/${server}`);
@@ -23,6 +23,11 @@ const Config = ({server, setChannel}) => {
         output = [...output, data];
         setChannelList(output);
       });
+      console.log(server);
+      const details = await gunService.getServer(server);
+      console.log(details);
+      setServerName('[ ' + details.name + ' ]');
+      
 
       
     };
@@ -52,8 +57,7 @@ const Config = ({server, setChannel}) => {
   }
   return (
     <div className="Config">
-        
-      <div className="flexItem"><h3 id="title">Text Channels</h3></div>
+      <h1>{serverName}</h1>
       {
         channelList.map((channel) => (
           <div className="flexItem" key={channel}><p onClick={updateChannel}>[ {channel} ]</p></div>

@@ -40,7 +40,7 @@ ul{
 h5, p{
   text-align: left;
 }
-p{
+.sender{
   color: #8256c1;
   font-weight: 600;
   font-size: 1rem;

@@ -32,7 +32,7 @@ const MessageContainer = ({ channel, server,addMessage, clearMessages, messages}
                 <div className="Message" key={message.id}>
                   <img className="profileImage" src={`https://avatars.dicebear.com/api/initials/${message.name}.svg`} />
                   <div className="Content">
-                    <p>{message.name} <span>{moment(message.createdAt).fromNow()}</span></p>
+                    <p className="sender">{message.name} <span>{moment(message.createdAt).fromNow()}</span></p>
                     <h5>{message.message}</h5>
                   </div>
                 </div>
