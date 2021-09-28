@@ -57,12 +57,22 @@ const channel = (state = 'general', action) => {
     return state;
   }
 };
+
+const dm = (state = true, action) => {
+  switch (action.type) {
+  case 'SET_DM':
+    return action.payload?.dm;
+  default:
+    return state;
+  }
+};
 const reducers = combineReducers({
   messages,
   server,
   serverList,
   alias,
-  channel
+  channel,
+  dm
 });
 
 export default reducers;

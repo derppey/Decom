@@ -36,6 +36,7 @@ h1{
 input{
   width: 4vw;
   border: none;
+  height: 8px;
   padding: 3px 10px;
   border-radius: 15px;
   color: #8256c1;
@@ -59,4 +60,21 @@ input{
 .Config {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.createButton{
+  color: white;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: #8256c1;
+  font-weight: 600;
+  font-size: 1rem;
+  min-height: 35px;
+  margin-bottom: 5px;
+}
+
+.createButton:hover + .createNewServer, .createNewServer:hover{
+  display: block;
+  
 }

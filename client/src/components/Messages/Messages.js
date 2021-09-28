@@ -11,11 +11,11 @@ const MessageContainer = ({ channel, server,addMessage, clearMessages, messages}
     const getMessages = async () => {
       clearMessages();
       await Server.get(channel).get('messages').map().once(async (data) => {
-        if (data.createdAt >= new Date(+new Date() - 1 * 1000 * 60 * 60 * 3)) {
-          addMessage({ data, server, channel });
-          const div = document.getElementById('Messages');
-          div.scrollTop = div.scrollHeight;
-        }
+        //if (data.createdAt >= new Date(+new Date() - 1 * 1000 * 60 * 60 * 3)) {
+        addMessage({ data, server, channel });
+        const div = document.getElementById('Messages');
+        div.scrollTop = div.scrollHeight;
+        //}
       });
     };
     getMessages();

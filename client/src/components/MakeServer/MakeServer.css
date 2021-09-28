@@ -17,6 +17,7 @@ label, input {
 
 .loginInput {
   width: 110px;
+  height: 20px;
   text-align: center;
 }
 

@@ -7,11 +7,20 @@ import Config from '../Config/Config.js';
 import { connect } from 'react-redux';
 
 
-const MessageContainer = ({server}) => {
+const MessageContainer = ({dm}) => {
   return (
     <div className='MessageContainer'>
       {
-        server === '' ? (<div className="placeHolder"></div>):
+        dm ? (
+          <div className="placeHolder">
+            <h1>Welcome to Decom!</h1>
+            <h3>Click on the + button to create your own server.</h3>
+            <br></br>
+            <h3>Alternatively you can join a server by clicking on a join link.</h3>
+            <h3>You could also directly message someone by clicking the
+              <br />purple message bubble at the top</h3>
+          </div>
+        ):
           (<div className='MessageSubContainer'>
             <Config />
             <Messages />
@@ -29,6 +38,7 @@ const MessageContainer = ({server}) => {
 const mapStateToProps = (state) => {
   return {
     server: state.server,
+    dm: state.dm,
 
   };
 };

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 //import gunService from '../../services/gunService';
 import { connect } from 'react-redux';
-import { addServer, setServer } from '../../redux/actions';
+import { addServer, setServer, setDm } from '../../redux/actions';
 import './ServerList.css';
 import { useHistory } from 'react-router-dom';
 import { db } from '../../services/userService';
 
-const ServerList = ({ setServer,alias}) => {
+const ServerList = ({ setServer,alias, setDm}) => {
   const history = useHistory();
   const [serverList, addServer] = useState([]);
   const servers = db.get(alias).get('serverList');
@@ -41,10 +41,18 @@ const ServerList = ({ setServer,alias}) => {
   async function updateDaServer (e) {
     const server = e.target.attributes.getNamedItem('alt').nodeValue;
     setServer(server);
+    setDm(false);
   }
-
+  function dmTime () {
+    setDm(true);
+  }
   return (
     <div className="ServerPanel">
+      <div className="ServerContainer">
+        <img className="dmImg" onClick={dmTime} src={process.env.PUBLIC_URL + '/logo2.png'}/>
+        <p className="Highlight">➤</p>
+      </div>
+      <hr className="solid" />
       {
         serverList.map((server) => (
           <div className="ServerContainer" key={server.uuid}>
@@ -53,7 +61,7 @@ const ServerList = ({ setServer,alias}) => {
           </div>
         ))
       }
-      <div>
+      <div className="addButton">
         <button onClick={createServer} id="addServer">+</button>
       </div>
     </div>
@@ -64,14 +72,16 @@ const mapStateToProps = (state) => {
   return {
     serverList: state.serverList,
     server: state.server,
-    alias: state.alias,
+    alias: state.alias, 
+    dm: state.dm,
 
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   addServer: (payload) => dispatch(addServer(payload)),
-  setServer: (payload) => dispatch(setServer(payload))
+  setServer: (payload) => dispatch(setServer(payload)),
+  setDm: (payload) => dispatch(setDm(payload)),
 
 });
 

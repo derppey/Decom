@@ -42,7 +42,7 @@ const MakeServer = ({alias}) => {
       </div>
       <div>
         <label htmlFor="uname">Server Icon: </label>
-        <input accept="image/*" type='file' id="imgInp" onChange={updateImage}/>
+        <input className="loginInput" accept="image/*" type='file' id="imgInp" onChange={updateImage}/>
       </div>
       <button className="buttons" onClick={submit}>Submit</button>
       

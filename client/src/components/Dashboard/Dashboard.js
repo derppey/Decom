@@ -38,9 +38,6 @@ const Dashboard = ({alias, setAlias}) => {
         <div>
           <div className="loading">
             <h1 className="status">Please wait while I load your messages</h1>
-            <video autoPlay muted>
-              <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
-            </video>
           </div>
           <div className='Dashboard'>
             <ServerList/>
@@ -52,9 +49,6 @@ const Dashboard = ({alias, setAlias}) => {
         <div>
           <div className="loading">
             <h1 className="status">Please wait while I load your messages</h1>
-            <video autoPlay muted>
-              <source src='https://giphy.com/embed/gtm6yZur9eRFoo1UvO/video' type="video/mp4" />
-            </video>
           </div>
           <div className="notLoggedIn">
             <h1 className="status">Sorry it appears you are not logged in, click <Link to="/login">Here</Link> to login!</h1>

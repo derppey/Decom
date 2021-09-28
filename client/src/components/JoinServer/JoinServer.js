@@ -52,7 +52,7 @@ const JoinServer = () => {
     <div>
       {localAlias !== '' ? (
         <div className="joinServer">
-          <img src={serverDetails.icon}/>
+          <img className="serverImage" src={serverDetails.icon}/>
           <div>
             <p className="joinMessage">Wow! {localAlias}, Joined {serverDetails.name}!</p>
             <p className="joinMessage">Click <Link to="/app">here</Link> to go back to the chat!</p>
@@ -68,7 +68,7 @@ const JoinServer = () => {
               </div>
             ): (
               <div className="LoginPage">
-                <h1>Please join before you join!</h1>
+                <h1>Please login before you join!</h1>
                 <div>
                   <label htmlFor="uname">Username</label>
                   <input className="loginInput" type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>

@@ -26,13 +26,16 @@ const gunService = {
   createServer: async (alias, name, image) => {
     const servers = db.get('servers');
     if (!(serverNameArray.includes(name))) {
+      const alias = await user.get('alias');
       const server = {
         name,
         uuid: uuidv4(),
         icon: image,
+        owner: alias,
       };
       servers.set(server);
       db.get(alias).get('serverList').set(server);
+      console.log(alias);
       servers.get(`${server.uuid}`).put(server);
       servers.get(`${server.uuid}`).get('members').set(user);
       const Server = db.get(`${server.uuid}`);

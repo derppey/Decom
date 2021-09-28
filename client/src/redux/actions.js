@@ -50,3 +50,12 @@ export const setChannel = (channel) => {
     }
   };
 };
+
+export const setDm = (dm) => {
+  return {
+    type: 'SET_DM',
+    payload: {
+      dm: dm,
+    }
+  };
+};

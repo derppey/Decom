@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { setChannel } from '../../redux/actions';
 import gunService from '../../services/gunService';
-import { db } from '../../services/userService';
+import { db, user } from '../../services/userService';
 
 
 import './Config.css';
@@ -11,6 +11,7 @@ const Config = ({server, setChannel}) => {
   const [channelName, setChannelName] = useState('');
   const [channelList, setChannelList] = useState(['general']);
   const [serverName, setServerName] = useState('');
+  const [serverOwner, setServerOwner] = useState(false);
   useEffect(() => {
     const getChannels = async () => {
       const Server = db.get(`servers/${server}`);
@@ -23,9 +24,10 @@ const Config = ({server, setChannel}) => {
         output = [...output, data];
         setChannelList(output);
       });
-      console.log(server);
+      const userAlias = await user.get('alias');
       const details = await gunService.getServer(server);
-      console.log(details);
+      setServerOwner(details.owner === userAlias);
+      console.log(details, userAlias);
       setServerName('[ ' + details.name + ' ]');
       
 
@@ -44,7 +46,7 @@ const Config = ({server, setChannel}) => {
     const res = e.target.innerHTML.match(/\w/gm).join('');
     setChannel(res);
   }
-
+  
   function onChange (e) {
     setChannelName(e.target.value);
   }
@@ -55,16 +57,27 @@ const Config = ({server, setChannel}) => {
       setChannelName('');
     }
   }
+  
+  
   return (
     <div className="Config">
-      <h1>{serverName}</h1>
+      <div>
+        <h1>{serverName}</h1>
+         
+      </div>
       {
         channelList.map((channel) => (
           <div className="flexItem" key={channel}><p onClick={updateChannel}>[ {channel} ]</p></div>
         ))
       }
-      <div className="flexItem"><p>[ <input type='text' value={channelName} onChange={onChange} onKeyDown={handleKeyDown} /> ]</p></div>
+      
+      {serverOwner ? (
+        <div className="flexItem">
+          <p className="createNewServer">[ <input type='text' value={channelName} onChange={onChange} onKeyDown={handleKeyDown} /> ]</p>
+        </div>
+      ) : (<b></b>)}
       <div className="flexItem"><button onClick={sendInvite}className="inviteButton">Invite</button></div>
+      
       
     </div>
   );
