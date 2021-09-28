@@ -50,14 +50,14 @@ const Login = () => {
             <h1>Create/Login</h1>
             <div>
               <label htmlFor="uname">Username</label>
-              <input type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>
+              <input className="loginInput" type="text" placeholder="Enter Username" name="uname" value={username} onChange={onUpdateUsername} required/>
             </div>
             <div>
               <label htmlFor="password">Password</label>
-              <input type="password" placeholder="Enter Password" name="password" value={password} onChange={onUpdatePasword} required/>
+              <input className="loginInput" type="password" placeholder="Enter Password" name="password" value={password} onChange={onUpdatePasword} required/>
             </div>
-            <button onClick={login}>Login</button>
-            <button onClick={signUp}>Register</button>
+            <button className="buttons" onClick={login}>Login</button>
+            <button className="buttons" onClick={signUp}>Register</button>
           </div>
         )}
     </div>

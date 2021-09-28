@@ -28,7 +28,7 @@ const Dashboard = ({alias, setAlias}) => {
       } catch (err) {
         console.log(err);
       }
-    }, 1000);
+    }, 2000);
 
   },[]);
   return (

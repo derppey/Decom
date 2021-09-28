@@ -20,7 +20,7 @@ const MemberList = ({ server }) => {
   }, [server]);
   return (
     <div className="MemberList">
-      <h1>Members</h1>
+      <h1 className="MembersHeader">Members</h1>
       {
         members.map((person) => (
           <div key={person.alias}><p>{person.alias}</p></div>
